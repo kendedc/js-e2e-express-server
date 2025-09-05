@@ -23,7 +23,7 @@ steps:
     versionSpec: '18.x'
   displayName: 'Install Node.js'
 
-- template: cicd-templates/insert-npm-steps.yml
+- template: insert-npm-steps.yml@cicd-templates
 
 - task: PublishTestResults@2
   inputs:
