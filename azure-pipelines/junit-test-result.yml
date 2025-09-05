@@ -6,6 +6,14 @@
 trigger:
 - main
 
+# reference a shared repo that stores pipeline templates
+resources:
+  repositories:
+    - repository: cicd-templates              # Alias used locally
+      type: github
+      name: kendedc/test-cicd-template        # Example repo name
+      ref: refs/heads/main                    # Branch to pull from
+
 pool:
   vmImage: ubuntu-latest
 
@@ -15,10 +23,8 @@ steps:
     versionSpec: '18.x'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-    npm test
+- template: cicd-templates/insert-npm-steps.yml
+
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
