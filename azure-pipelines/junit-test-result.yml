@@ -13,7 +13,7 @@ resources:
       type: github
       name: kendedc/test-cicd-template        # Example repo name
       ref: refs/heads/main                    # Branch to pull from
-      endpoint: https://github.com/kendedc/test-cicd-template
+      endpoint: kendedc
 
 pool:
   vmImage: ubuntu-latest
