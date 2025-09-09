@@ -1,8 +1,3 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - main
 
@@ -18,10 +13,13 @@ resources:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+  - name: nodeVersion
+    type: string
+    default: '18.x'
+
 steps:
 - template: install-node.yml@cicd-templates
-  parameters:
-    nodeVersion: '18.x'
 
 - template: npm-steps.yml@cicd-templates
 
