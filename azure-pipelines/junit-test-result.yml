@@ -17,6 +17,9 @@ parameters:
   - name: nodeVersion
     type: string
     default: '18.x'
+  - name: isPrint
+    type: boolean
+    default: false
 
 steps:
 - template: install-node.yml@cicd-templates
@@ -24,6 +27,11 @@ steps:
     nodeVersion: ${{ parameters.nodeVersion }}
 
 - template: npm-steps.yml@cicd-templates
+
+- ${{ if eq(parameters.isPrint, true) }}:
+  - template: print.yml@cicd-templates
+    parameters:
+      isPrint: true
 
 - task: PublishTestResults@2
   inputs:
