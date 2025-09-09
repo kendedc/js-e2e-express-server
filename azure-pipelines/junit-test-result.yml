@@ -19,7 +19,7 @@ parameters:
     default: '18.x'
   - name: isPrint
     type: boolean
-    default: false
+    default: true
 
 steps:
 - template: install-node.yml@cicd-templates
@@ -30,8 +30,6 @@ steps:
 
 - ${{ if eq(parameters.isPrint, true) }}:
   - template: print.yml@cicd-templates
-    parameters:
-      isPrint: true
 
 - task: PublishTestResults@2
   inputs:
