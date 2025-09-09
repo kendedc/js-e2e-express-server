@@ -20,6 +20,8 @@ parameters:
 
 steps:
 - template: install-node.yml@cicd-templates
+  parameters:
+    nodeVersion: ${{ parameters.nodeVersion }}
 
 - template: npm-steps.yml@cicd-templates
 
