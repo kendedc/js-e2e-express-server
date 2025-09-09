@@ -50,3 +50,12 @@ stages:
         testResultsFiles: '**/TEST-*.xml'
       displayName: 'Publish Test Results'
 
+- stage: Print
+  displayName: 'Print Stage'
+  jobs:
+  - job: Print
+    displayName: 'Print Job'
+    script: |
+      echo "${{ variables['Build.SourceBranch'] }}"
+      echo "${{ variables['Build.SourceVersion'] }}"
+      echo "${{ variables['Build.Reason'] }}"
