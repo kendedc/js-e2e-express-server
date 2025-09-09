@@ -19,10 +19,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '18.x'
-  displayName: 'Install Node.js'
+- template: install-node.yml@cicd-templates
+  parameters:
+    nodeVersion: '18.x'
 
 - template: npm-steps.yml@cicd-templates
 
