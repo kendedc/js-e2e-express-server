@@ -55,7 +55,8 @@ stages:
   jobs:
   - job: Print
     displayName: 'Print Job'
-    script: |
-      echo "${{ variables['Build.SourceBranch'] }}"
-      echo "${{ variables['Build.SourceVersion'] }}"
-      echo "${{ variables['Build.Reason'] }}"
+    steps:
+    - script: |
+        echo "${{ variables['Build.SourceBranch'] }}"
+        echo "${{ variables['Build.SourceVersion'] }}"
+        echo "${{ variables['Build.Reason'] }}"
