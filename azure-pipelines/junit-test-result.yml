@@ -21,18 +21,32 @@ parameters:
     type: boolean
     default: true
 
-steps:
-- template: install-node.yml@cicd-templates
-  parameters:
-    nodeVersion: ${{ parameters.nodeVersion }}
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+  - job: InstallNode
+    displayName: 'Install Node Job'
+    steps:
+    - template: install-node.yml@cicd-templates
+      parameters:
+        nodeVersion: ${{ parameters.nodeVersion }}
+  - job: Build
+    displayName: 'Build Job'
+    dependsOn: InstallNode
+    steps:
+    - template: npm-steps.yml@cicd-templates
 
-- template: npm-steps.yml@cicd-templates
+- stage: Test
+  displayName: 'Test Stage'
+  dependsOn: Build
+  jobs:
+  - job: Test
+    displayName: 'Test Job'
+    steps:
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml'
+      displayName: 'Publish Test Results'
 
-- ${{ if eq(parameters.isPrint, true) }}:
-  - template: print.yml@cicd-templates
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TEST-*.xml'
-  displayName: 'npm install and build'
