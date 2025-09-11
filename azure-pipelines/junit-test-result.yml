@@ -17,7 +17,7 @@ parameters:
   - name: nodeVersion
     type: string
     default: '18.x'
-  - name: isPrint
+  - name: isFrozen
     type: boolean
     default: true
 
