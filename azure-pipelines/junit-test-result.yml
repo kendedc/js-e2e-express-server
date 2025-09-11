@@ -36,6 +36,8 @@ stages:
     dependsOn: InstallNode
     steps:
     - template: npm-steps.yml@cicd-templates
+      parameters:
+        isFrozen: ${{ parameters.isFrozen }}
 
 - stage: Test
   displayName: 'Test Stage'
