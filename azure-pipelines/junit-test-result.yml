@@ -17,9 +17,9 @@ parameters:
   - name: nodeVersion
     type: string
     default: '18.x'
-  - name: isFrozen
+  - name: isTest
     type: boolean
-    default: true
+    default: false
 
 stages:
 - stage: Build
@@ -35,22 +35,21 @@ stages:
     displayName: 'Build Job'
     dependsOn: InstallNode
     steps:
-    - template: npm-steps.yml@cicd-templates
-      parameters:
-        isFrozen: ${{ parameters.isFrozen }}
+    - template: ci-steps.yml@cicd-templates
 
-- stage: Test
-  displayName: 'Test Stage'
-  dependsOn: Build
-  jobs:
-  - job: Test
-    displayName: 'Test Job'
-    steps:
-    - task: PublishTestResults@2
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/TEST-*.xml'
-      displayName: 'Publish Test Results'
+- ${{ if eq(parameters.isTest, true) }}:
+  - stage: Test
+    displayName: 'Test Stage'
+    dependsOn: Build
+    jobs:
+    - job: Test
+      displayName: 'Test Job'
+      steps:
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/TEST-*.xml'
+        displayName: 'Publish Test Results'
 
 - stage: Print
   displayName: 'Print Stage'
